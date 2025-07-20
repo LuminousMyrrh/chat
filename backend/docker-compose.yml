@@ -1,0 +1,100 @@
+services:
+  user-crud:
+    build:
+      context: user-crud/
+      dockerfile: Dockerfile
+    container_name: user-crud
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user-db
+
+  user-service:
+    build:
+      context: user-service/
+      dockerfile: Dockerfile
+    container_name: user-service
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "8001:8001"
+    depends_on:
+      - user-crud
+
+  user-db:
+    image: postgres:15
+    container_name: user-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: userdb
+      POSTGRES_PASSWORD: userdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+
+  chat-crud:
+    build:
+      context: chat-crud/
+      dockerfile: Dockerfile
+    container_name: chat-crud
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "8002:8002"
+    depends_on:
+      - chat-db
+
+  chat-service:
+    build:
+      context: chat-service/
+      dockerfile: Dockerfile
+    container_name: chat-service
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "8003:8003"
+    depends_on:
+      - chat-crud
+
+  chat-db:
+    image: postgres:15
+    container_name: chat-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: chatdb
+      POSTGRES_USER: chatdb
+      POSTGRES_PASSWORD: chatdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - chat_db_data:/var/lib/postgresql/data
+
+  middleback:
+    build:
+      context: middleback/
+      dockerfile: Dockerfile
+    container_name: middleback
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "8004:8004"
+    depends_on:
+      - user-service
+
+volumes:
+  user_db_data:
+  chat_db_data:
