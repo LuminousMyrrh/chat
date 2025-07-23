@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string("access_token")->unique();
-            $table->string("refresh_token")->nullable();
             $table->string("email_verification_token")->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->boolean('revoked')->default(false);
