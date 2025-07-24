@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     unzip \
     git \
     nodejs \
+    bash \
     npm
 
 RUN docker-php-ext-install pdo pdo_pgsql
