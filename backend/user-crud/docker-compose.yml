@@ -1,0 +1,28 @@
+services:
+  user-crud:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    restart: unless-stopped
+    working_dir: /var/u-crud
+    volumes:
+      - .:/var/u-crud
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user-db
+
+  user-db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: userdb
+      POSTGRES_PASSWORD: userdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+
+volumes:
+  user_db_data:
