@@ -15,19 +15,6 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * @OA\Get(
-     *  path="/api/users",
-     *  summary="Get all users",
-     *  tags={"Users"},
-     *  @OA\Response(response=200, description="List of users")
-     * )
-     */
-    public function index()
-    {
-        return User::all();
-    }
-
-    /**
      * @OA\Post(
      *  path="/api/users",
      *  summary="Create user",
@@ -47,11 +34,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
-
         return User::create($data);
     }
 
@@ -69,7 +51,7 @@ class UserController extends Controller
      *  @OA\Response(response=200, description="User found")
      * )
      */
-    public function show($id)
+    public function show(int $id)
     {
         return User::findOrFail($id);
     }
@@ -99,9 +81,6 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $data = $request->all();
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
 
         $user->update($data);
 
@@ -122,12 +101,10 @@ class UserController extends Controller
      *  @OA\Response(response=200, description="User deleted")
      * )
      */
-    public function destroy(User $user)
+    public function delete(User $user)
     {
         $user->delete();
 
-        return response()->json([
-            'message' => 'User deleted successfully'
-        ], 200);
+        return response()->noContent();
     }
 }

@@ -1,0 +1,77 @@
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true
+
+   FAIL  Tests\Feature\UserCrudTest
+  ⨯ can create user                                                      0.08s  
+  ⨯ can read users                                                       0.01s  
+  ⨯ can update user
+  ⨯ can delete user
+  ────────────────────────────────────────────────────────────────────────────  
+   FAILED  Tests\Feature\UserCrudTest > can create user                         
+  Expected response status code [201] but received 404.
+Failed asserting that 404 is identical to 201.
+
+  at tests/Feature/UserCrudTest.php:22
+     18▕             'password' => "asthue",
+     19▕         ];
+     20▕         $response = $this->post('/api/users', $data);
+     21▕ 
+  ➜  22▕         $response->assertStatus(201);
+     23▕         $this->assertDatabaseHas('users', $data);
+     24▕     }
+     25▕ 
+     26▕     public function test_can_read_users()
+
+  ────────────────────────────────────────────────────────────────────────────  
+   FAILED  Tests\Feature\UserCrudTest > can read users                          
+  Expected response status code [200] but received 404.
+Failed asserting that 404 is identical to 200.
+
+  at tests/Feature/UserCrudTest.php:31
+     27▕     {
+     28▕         $user = User::factory()->create();
+     29▕         $response = $this->get('/api/users');
+     30▕ 
+  ➜  31▕         $response->assertStatus(200)
+     32▕                  ->assertJsonFragment(['name' => $user->name]);
+     33▕     }
+     34▕ 
+     35▕     public function test_can_update_user()
+
+  ────────────────────────────────────────────────────────────────────────────  
+   FAILED  Tests\Feature\UserCrudTest > can update user                         
+  Expected response status code [200] but received 404.
+Failed asserting that 404 is identical to 200.
+
+  at tests/Feature/UserCrudTest.php:42
+     38▕         $data = ['name' => 'Updated'];
+     39▕ 
+     40▕         $response = $this->put("/api/users/{$user->id}", $data);
+     41▕ 
+  ➜  42▕         $response->assertStatus(200);
+     43▕         $this->assertDatabaseHas('users', $data);
+     44▕     }
+     45▕ 
+     46▕     public function test_can_delete_user()
+
+  ────────────────────────────────────────────────────────────────────────────  
+   FAILED  Tests\Feature\UserCrudTest > can delete user                         
+  Expected response status code [200] but received 404.
+Failed asserting that 404 is identical to 200.
+
+  at tests/Feature/UserCrudTest.php:51
+     47▕     {
+     48▕         $user = User::factory()->create();
+     49▕         $response = $this->delete("/api/users/{$user->id}");
+     50▕ 
+  ➜  51▕         $response->assertStatus(200);
+     52▕         $this->assertDatabaseMissing('users', ['id' => $user->id]);
+     53▕     }
+     54▕ }
+     55▕
+
+
+  Tests:    4 failed, 1 passed (5 assertions)
+  Duration: 0.13s
+
