@@ -2,7 +2,7 @@ services:
   user-crud:
     build:
       context: user-crud/
-      dockerfile: Dockerfile
+      dockerfile: .docker/Dockerfile
     container_name: user-crud
     restart: unless-stopped
     working_dir: /var/www
