@@ -7,18 +7,6 @@
     },
     "paths": {
         "/api/users": {
-            "get": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Get all users",
-                "operationId": "c457726701591d1183b53aa71fc13441",
-                "responses": {
-                    "200": {
-                        "description": "List of users"
-                    }
-                }
-            },
             "post": {
                 "tags": [
                     "Users"

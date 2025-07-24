@@ -3,7 +3,6 @@ services:
     build:
       context: user-crud/
       dockerfile: .docker/Dockerfile
-    container_name: user-crud
     restart: unless-stopped
     working_dir: /var/www
     volumes:
@@ -17,7 +16,6 @@ services:
     build:
       context: user-service/
       dockerfile: Dockerfile
-    container_name: user-service
     restart: unless-stopped
     working_dir: /var/www
     volumes:
@@ -29,7 +27,6 @@ services:
 
   user-db:
     image: postgres:15
-    container_name: user-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: userdb
@@ -44,7 +41,6 @@ services:
     build:
       context: chat-crud/
       dockerfile: Dockerfile
-    container_name: chat-crud
     restart: unless-stopped
     working_dir: /var/www
     volumes:
@@ -58,7 +54,6 @@ services:
     build:
       context: chat-service/
       dockerfile: Dockerfile
-    container_name: chat-service
     restart: unless-stopped
     working_dir: /var/www
     volumes:
@@ -70,7 +65,6 @@ services:
 
   chat-db:
     image: postgres:15
-    container_name: chat-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: chatdb
@@ -85,7 +79,6 @@ services:
     build:
       context: middleback/
       dockerfile: Dockerfile
-    container_name: middleback
     restart: unless-stopped
     working_dir: /var/www
     volumes:
