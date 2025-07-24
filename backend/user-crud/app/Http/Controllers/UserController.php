@@ -101,7 +101,7 @@ class UserController extends Controller
      *  @OA\Response(response=200, description="User deleted")
      * )
      */
-    public function delete(User $user)
+    public function destroy(User $user)
     {
         $user->delete();
 
